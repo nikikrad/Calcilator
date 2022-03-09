@@ -13,10 +13,6 @@ class MainActivity : AppCompatActivity() {
     var tvOutput: TextView? = null
     var tvInput: TextView? = null
     var Input: String = "Input"
-    companion object {
-        const val EXPRESSION_INPUT = "expressionInput"
-        const val EXPRESSION_RESULT = "expressionResult"
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -96,15 +92,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putString(EXPRESSION_INPUT, Input)
-        outState.putString(EXPRESSION_RESULT, tvOutput?.text.toString())
+        outState.putString("input", Input)
+        outState.putString("output", tvOutput?.text.toString())
         super.onSaveInstanceState(outState)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        tvInput?.text = savedInstanceState.getString(EXPRESSION_INPUT)
-        tvOutput?.text = savedInstanceState.getString(EXPRESSION_RESULT)
+        tvInput?.text = savedInstanceState.getString("input")
+        tvOutput?.text = savedInstanceState.getString("output")
     }
 
     fun addSymbolToInputTextView(symbol: String) {

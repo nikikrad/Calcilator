@@ -7,12 +7,13 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import com.udojava.evalex.Expression
+import java.lang.ArithmeticException
 
 class MainActivity : AppCompatActivity() {
 
     var tvOutput: TextView? = null
     var tvInput: TextView? = null
-    var Input: String = "Input"
+    var Input: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,44 +54,50 @@ class MainActivity : AppCompatActivity() {
             val btnFact = findViewById<Button>(R.id.btn_Fact)
             val btnSqrt = findViewById<Button>(R.id.btn_Sqrt)
 
-            btnRightBracket.setOnClickListener { addSymbolToInputTextView("(") }
-            btnLeftBracket.setOnClickListener { addSymbolToInputTextView(")") }
-            btnArrowUp.setOnClickListener { addSymbolToInputTextView("^") }
-            btnE.setOnClickListener { addSymbolToInputTextView("e") }
-            btnPI.setOnClickListener { addSymbolToInputTextView("PI") }
+            btnRightBracket.setOnClickListener { getSymbol("(") }
+            btnLeftBracket.setOnClickListener { getSymbol(")") }
+            btnArrowUp.setOnClickListener { getSymbol("^") }
+            btnE.setOnClickListener { getSymbol("e") }
+            btnPI.setOnClickListener { getSymbol("PI") }
 
-            btnSin.setOnClickListener { addSymbolToInputTextView("sin(") }
-            btnCos.setOnClickListener { addSymbolToInputTextView("cos(") }
-            btnTg.setOnClickListener { addSymbolToInputTextView("tan(") }
-            btnLog.setOnClickListener { addSymbolToInputTextView("log(") }
-            btnFact.setOnClickListener { addSymbolToInputTextView("FACT(") }
-            btnSqrt.setOnClickListener { addSymbolToInputTextView("SQRT(") }
+            btnSin.setOnClickListener { getSymbol("sin(") }
+            btnCos.setOnClickListener { getSymbol("cos(") }
+            btnTg.setOnClickListener { getSymbol("tan(") }
+            btnLog.setOnClickListener { getSymbol("log(") }
+            btnFact.setOnClickListener { getSymbol("FACT(") }
+            btnSqrt.setOnClickListener { getSymbol("SQRT(") }
 
         }
 
         tvOutput = findViewById<TextView>(R.id.tv_Output)
         tvInput = findViewById<TextView>(R.id.tv_Input)
 
-        btnZero.setOnClickListener { addSymbolToInputTextView("0") }
-        btnOne.setOnClickListener { addSymbolToInputTextView("1") }
-        btnTwo.setOnClickListener { addSymbolToInputTextView("2") }
-        btnThree.setOnClickListener { addSymbolToInputTextView("3") }
-        btnFour.setOnClickListener { addSymbolToInputTextView("4") }
-        btnFive.setOnClickListener { addSymbolToInputTextView("5") }
-        btnSix.setOnClickListener { addSymbolToInputTextView("6") }
-        btnSeven.setOnClickListener { addSymbolToInputTextView("7") }
-        btnEight.setOnClickListener { addSymbolToInputTextView("8") }
-        btnNine.setOnClickListener { addSymbolToInputTextView("9") }
+        btnZero.setOnClickListener { getSymbol("0") }
+        btnOne.setOnClickListener { getSymbol("1") }
+        btnTwo.setOnClickListener { getSymbol("2") }
+        btnThree.setOnClickListener { getSymbol("3") }
+        btnFour.setOnClickListener { getSymbol("4") }
+        btnFive.setOnClickListener { getSymbol("5") }
+        btnSix.setOnClickListener { getSymbol("6") }
+        btnSeven.setOnClickListener { getSymbol("7") }
+        btnEight.setOnClickListener { getSymbol("8") }
+        btnNine.setOnClickListener { getSymbol("9") }
 
-        btnDot.setOnClickListener { addSymbolToInputTextView(".") }
-        btnDevide.setOnClickListener { addSymbolToInputTextView("/") }
-        btnMultiplus.setOnClickListener { addSymbolToInputTextView("*") }
-        btnMinus.setOnClickListener { addSymbolToInputTextView("-") }
-        btnPlus.setOnClickListener { addSymbolToInputTextView("+") }
-        btnPercent.setOnClickListener { addSymbolToInputTextView("%") }
-        btnAC.setOnClickListener { clearInputTextField() }
-        btnDelete.setOnClickListener { removeLastSymbol() }
-        btnEquals.setOnClickListener { getResult() }
+        btnDot.setOnClickListener { getSymbol(".") }
+        btnDevide.setOnClickListener { getSymbol("/") }
+        btnMultiplus.setOnClickListener { getSymbol("*") }
+        btnMinus.setOnClickListener { getSymbol("-") }
+        btnPlus.setOnClickListener { getSymbol("+") }
+        btnPercent.setOnClickListener { getSymbol("%") }
+        btnAC.setOnClickListener { clearAll() }
+        btnDelete.setOnClickListener { deleteSymbol() }
+        btnEquals.setOnClickListener {
+            try {
+                getResult()
+            } catch (error: Expression.ExpressionException) {
+                tvOutput?.text = "Error"
+            }
+        }
 
     }
 
@@ -106,29 +113,37 @@ class MainActivity : AppCompatActivity() {
         tvOutput?.text = savedInstanceState.getString("output")
     }
 
-    fun addSymbolToInputTextView(symbol: String) {
-        if (Input == "Input") { Input = "" }
+    fun getSymbol(symbol: String) {
+        if (Input == "Input") {
+            Input = ""
+        }
         Input += symbol
         tvInput?.text = Input
     }
 
-    fun removeLastSymbol() {
+    fun deleteSymbol() {
         Input = Input.dropLast(1)
         tvInput?.text = Input
     }
 
-    fun clearInputTextField() {
+    fun clearAll() {
         Input = ""
         tvInput?.text = Input
         tvOutput?.text = ""
     }
 
     fun getResult() {
-        val expression = Expression(Input)
-        try {
-            tvOutput?.text = expression.eval().toString()
-        } catch (error: Expression.ExpressionException) {
-            tvOutput?.text = "Error"
+        try{
+            try {
+                val expression = Expression(Input)
+                tvOutput?.text = expression.eval().toString()
+
+            } catch (error: Expression.ExpressionException) {
+                tvOutput?.text = "wrong input"
+            }
+        }catch (error: ArithmeticException){
+            tvOutput?.text = "can't divide by zero"
         }
+
     }
 }

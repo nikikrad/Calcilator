@@ -61,7 +61,7 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_Equals"
-        android:layout_width="240dp"
+        android:layout_width="120dp"
         android:layout_height="60dp"
         android:textSize="30sp"
         android:text="="
@@ -227,13 +227,23 @@
         android:textSize="20sp"
         android:background="@color/purple_200"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btn_Equals" />
+        app:layout_constraintStart_toEndOf="@+id/btn_Sqrt" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_History"
+        android:id="@+id/btn_Sqrt"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:text="Sqrt"
+        android:textSize="20sp"
+        android:background="@color/purple_200"
+        app:layout_constraintStart_toEndOf="@+id/btn_Equals"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_Fact"
         android:layout_width="0dp"
         android:layout_height="60dp"
-        android:text="HISTORY"
+        android:text="FACT"
         android:textSize="20sp"
         android:background="@color/purple_200"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -257,7 +267,7 @@
         android:text="LOG"
         android:textSize="20sp"
         android:background="@color/purple_200"
-        app:layout_constraintBottom_toTopOf="@+id/btn_History"
+        app:layout_constraintBottom_toTopOf="@+id/btn_Fact"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btn_E" />
 

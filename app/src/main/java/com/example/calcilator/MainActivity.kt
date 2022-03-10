@@ -50,7 +50,8 @@ class MainActivity : AppCompatActivity() {
             val btnCos = findViewById<Button>(R.id.btn_Cos)
             val btnTg = findViewById<Button>(R.id.btn_Tg)
             val btnLog = findViewById<Button>(R.id.btn_Log)
-            val btnHistory = findViewById<Button>(R.id.btn_History)
+            val btnFact = findViewById<Button>(R.id.btn_Fact)
+            val btnSqrt = findViewById<Button>(R.id.btn_Sqrt)
 
             btnRightBracket.setOnClickListener { addSymbolToInputTextView("(") }
             btnLeftBracket.setOnClickListener { addSymbolToInputTextView(")") }
@@ -62,7 +63,9 @@ class MainActivity : AppCompatActivity() {
             btnCos.setOnClickListener { addSymbolToInputTextView("cos(") }
             btnTg.setOnClickListener { addSymbolToInputTextView("tan(") }
             btnLog.setOnClickListener { addSymbolToInputTextView("log(") }
-            btnHistory.setOnClickListener { addSymbolToInputTextView("cot(") }
+            btnFact.setOnClickListener { addSymbolToInputTextView("FACT(") }
+            btnSqrt.setOnClickListener { addSymbolToInputTextView("SQRT(") }
+
         }
 
         tvOutput = findViewById<TextView>(R.id.tv_Output)
